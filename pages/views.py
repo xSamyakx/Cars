@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Team
 from carss.models import Car
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.contrib import messages
+
 # Create your views here.
 def home(request):
     teams=Team.objects.all()
@@ -32,4 +36,7 @@ def services(request):
     return render(request,'pages/services.html')
 
 def contact(request):
+    if request.method=='POST':
+        messages.success(request,"Thank You for contacting us.")
+        return redirect('contact')
     return render(request,'pages/contact.html')
